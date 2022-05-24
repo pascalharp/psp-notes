@@ -1,0 +1,6 @@
+[book]
+authors = ["Pascal H."]
+language = "en"
+multilingual = false
+src = "src"
+title = "PSP Emulation Notes"
