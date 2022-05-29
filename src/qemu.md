@@ -74,7 +74,7 @@ cat <<EOF > .sync
       }
 EOF
 ```
-Start the emulation Qemu with debug flags (see above). Then start gdb, attach to the session, source the ret-sync plugin and start the synchronization:
+Start the Qemu emulation with debug flags (see above). Then start gdb, attach to the session, source the ret-sync plugin and start the synchronization:
 ```
 arm-none-eabi-gdb
 target remote localhost:1234
