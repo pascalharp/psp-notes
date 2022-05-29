@@ -167,14 +167,14 @@ path/to/PSPEmu/build/PSPEmu \
 ```bash
 #!/bin/env bash
 arm-none-eabi-gdb \
-	-ex 'source ~/.gdb/sync.py' \         # Only if combined with ret-sync
+	-ex 'source path/to/ret-sync/sync.py' \  # Only if combined with ret-sync
 	-ex 'pi reset_architecture("arm")' \
-	-ex 'source ~/.gdb/sync_bridge.py' \
+	-ex 'source path/to/sync_bridge.py' \    # Set path to sync bridge script
 	-ex 'sb_init' \
-	-ex 'gef-remote localhost:1234' \     # If not using gef replace with: target remote localhost:1234
+	-ex 'gef-remote localhost:1234' \        # If not using gef replace with: target remote localhost:1234
 	-ex 'break *0xffff005c' \
 	-ex 'continue' \
-	-ex 'sync' \                          # Only if combined with ret-sync
+	-ex 'sync' \                             # Only if combined with ret-sync
 	-ex 'sb_lead'
 ```
 
@@ -183,9 +183,9 @@ arm-none-eabi-gdb \
 #!/bin/env bash
 arm-none-eabi-gdb \
 	-ex 'pi reset_architecture("arm")' \
-	-ex 'source ~/.gdb/sync_bridge.py' \
+	-ex 'source path/to/sync_bridge.py' \    # Set path to sync bridge script
 	-ex 'sb_init' \
-	-ex 'gef-remote localhost:1235' \     # If not using gef replace with: target remote localhost:1235
+	-ex 'gef-remote localhost:1235' \        # If not using gef replace with: target remote localhost:1235
 	-ex 'break *0xffff005c' \
 	-ex 'continue' \
 	-ex 'sb_follow'
