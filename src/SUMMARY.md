@@ -1,6 +1,7 @@
 # Summary
 
 - [Qemu](./qemu.md)
+- [Sync Bridge](./sync_bridge.md)
 - [Changelog](./changelog.md)
 - [Memory Regions](./memory_regions.md)
 	- [System Management Network](./memory_regions/smn.md)
