@@ -11,7 +11,7 @@
 | x86 control || ✅     | ?                    || ❌ \* | `hw/arm/psp-x86.c`       |
 | CCP         || ✅     | `psp-dev-ccp-v5.c`   || ✅    | `hw/misc/ccpv5.c`        |
 | smn flash   || ✅     | `psp-dev-flash.c`    || ✅    | `hw/arm/psp-smn-flash.c` |
-| psp fuse    || ✅     | `psp-dev-fuse.c`     || ❌    |                          |
+| psp fuse    || ✅     | `psp-dev-fuse.c`     || ✅\*\*| `hw/arm/psp.c`           |
 | psp gpio    || ✅     | `psp-dev-gpio.c`     || ❌ ?  |                          |
 | x86 uart    || ✅     | `psp-dev-x86-uart.c` || ❌ ?  |                          |
 | x86 iomux   || ✅     | `psp-dev-iomux.c`    || ❌ ?  |                          |
@@ -19,9 +19,7 @@
 
 _* only on Qemu v4 at the moment_
 
-## Misc
- - PSPEmu has a svc implementation?
- - PSPEmu smu?
+_** Move to seperate dev_
 
 ## SMN
 TODO
