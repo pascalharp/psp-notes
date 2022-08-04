@@ -17,6 +17,7 @@
 ## Improvements
  - Added more read only register values to the smn control => Reached another sts output
  - Separated trace output from `LOG_UNIMP` to `LOG_TRACE`
+ - Separated psp fuse to own dev device
 
 ## Status
  - different branch at 0xffff7420 (busy sleep) syncs back up later.
@@ -24,6 +25,7 @@
  - different branch at 0xffff35d4, qemu does not reach 0xffff35fc
 
 ## Notes
+ - good sync at 0xffff06dc
  - entering func 0xffff340c
    - psp-qemu has different value in r1 (0x0 instead of 0x10)
    - jumped to from 0xffff0cac

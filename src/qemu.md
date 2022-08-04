@@ -36,6 +36,12 @@ Additionally you can use:
 - `-d unimp,guest_errors` to output additional information (very verbose!).
 - `-S -s` to stop the execution at the beginning and to open a gdb port.
 
+### Additional emulation options
+Set specific device properties with the `-global` option. For example: `-global amd-psp.dbg_mode=true`
+
+Options:
+ - `amd-psp.dbg_mode` bool, enable dbg mode. This corresponds to the `fPspDbgMode` flag on PSPEmu.
+
 ## Connect with gdb
 
 Either with `arm-none-eabi-gdb` or `gdb-multiarch` you can connect to the running Qemu session with `target remote localhost:1234` if the emulation was started with the `-s` flag
