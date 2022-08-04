@@ -26,6 +26,6 @@
 
 ## Notes
  - good sync at 0xffff06dc
- - registers diverge at 0xffff0b60 -> value loaded from smn reagion differs
+ - registers diverge at 0xffff0b60 -> value loaded from smn reagion differs (addr: 0x125a078)
  - from there on inconsistency in regs
  - pc missmatch after 0xffff0bc4
