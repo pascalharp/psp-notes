@@ -26,7 +26,6 @@
 
 ## Notes
  - good sync at 0xffff06dc
- - entering func 0xffff340c
-   - psp-qemu has different value in r1 (0x0 instead of 0x10)
-   - jumped to from 0xffff0cac
-   - r1 copied from r9
+ - registers diverge at 0xffff0b60 -> value loaded from smn reagion differs
+ - from there on inconsistency in regs
+ - pc missmatch after 0xffff0bc4
