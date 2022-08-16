@@ -20,6 +20,7 @@ path/to/qemu/build/qemu-system-arm \
 	--machine amd-psp_zen \
 	--display none \
 	-device loader,file=$PSP_ROM_BL,addr=0xffff0000,force-raw=on \
+	-global amd-psp.dbg_mode=true \
 	-bios $PSP_UEFI_IMAGE \
 	-serial stdio \
 	-d unimp,guest_errors
@@ -45,25 +46,27 @@ path/to/PSPEmu/build/PSPEmu \
 #!/bin/env bash
 arm-none-eabi-gdb \
 	-ex 'source path/to/ret-sync/sync.py' \  # Only if combined with ret-sync
-	-ex 'pi reset_architecture("arm")' \
+	-ex 'ser arch arm' \
 	-ex 'source path/to/sync_bridge.py' \    # Set path to sync bridge script
 	-ex 'sb_init' \
-	-ex 'gef-remote localhost:1234' \        # If not using gef replace with: target remote localhost:1234
-	-ex 'break *0xffff005c' \
-	-ex 'continue' \
+	-ex 'target remote localhost:1234' \
+	-ex 'break *0xffff005c' \                # Set this to the starting point
 	-ex 'sync' \                             # Only if combined with ret-sync
-	-ex 'sb_lead'
+	-ex 'continue'
 ```
+
+Then initiate the synchronization with `sb_lead`
 
 ### GDB PSPEmu
 ```bash
 #!/bin/env bash
 arm-none-eabi-gdb \
-	-ex 'pi reset_architecture("arm")' \
+	-ex 'ser arch arm' \
 	-ex 'source path/to/sync_bridge.py' \    # Set path to sync bridge script
 	-ex 'sb_init' \
-	-ex 'gef-remote localhost:1235' \        # If not using gef replace with: target remote localhost:1235
-	-ex 'break *0xffff005c' \
-	-ex 'continue' \
-	-ex 'sb_follow'
+	-ex 'target remote localhost:1235' \
+	-ex 'break *0xffff005c' \                # Set this to the starting point
+	-ex 'continue'
 ```
+
+Let the synchronization begin with `sb_follow`
