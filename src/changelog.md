@@ -13,6 +13,9 @@
  - Created Sync Bridge Plugin
  - Sync Bridge Plugin now compares most basic registers instead of only pc
  - Moved Sync Bridge to its own repository
+ - Use python calls to load register values instead of gdb cli calls
+ - Automatically exchange compatible registers for synchronization
+ - Add option to skip address ranges to be checked
 
 ## Improvements
  - Added more read only register values to the smn control => Reached another sts output
@@ -22,11 +25,11 @@
  - Fix reset sctlr
 
 ## Status
- - different branch at 0xffff7420 (busy sleep) syncs back later.
+ - registers diverge at 0xffff7418 (busy sleep) syncs back later.
  - ~~registers diverge at 0xffff0b60 -> value loaded from smn reagion differs (addr: 0x125a078)~~
  - registers diverge at 0xffff3f14 -> Different read from timer -> syncs back later
  - registers diverge at 0xffff40f8 -> Different read from timer -> syncs back later
- - registers diverge at 0xffff63f8 -> Unimplemented device in qemu -> Results in different branch after 0xffff640c
-   - Qemu to: 0xffff6410
-   - PSPEmu to: 0xffff6428
-   - PC syncs back up at 0xffff6428, reg values still differ, results in pc difference after 0xffff62a8
+ - ~~registers diverge at 0xffff63f8 -> Unimplemented device in qemu -> Results in different branch after 0xffff640c~~
+   - ~~Qemu to: 0xffff6410~~
+   - ~~PSPEmu to: 0xffff6428~~
+   - ~~PC syncs back up at 0xffff6428, reg values still differ, results in pc difference after 0xffff62a8~~

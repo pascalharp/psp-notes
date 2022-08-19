@@ -12,6 +12,12 @@ Replace `PSP_ROM_BL` with the full path to the on-chip bootloader and `PSP_UEFI_
 
 Now start two `arm-none-eabi-gdb` instances and connect one to the Qemu emulation and one to the PSPEmu emulation. Source the sync\_bridge plugin and initialize it. Now first start one of them first as the leader with `sb_leader` and afterwords the other one as the follower `sb_follow`. Make sure they start at the same address. Check the scripts below on how to automate this process.
 
+The registers to compare are exchanged before the synchronization starts. Additionally address sections can be specified with `--skip start:end` that should be skipped and not checked.
+Example:
+```
+sb_lead --skip 0xffff7418:0xffff06dc
+```
+
 ### Qemu emulation
 ```bash
 #!/bin/env bash
