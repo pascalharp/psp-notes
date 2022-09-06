@@ -15,7 +15,7 @@ Now start two `arm-none-eabi-gdb` instances and connect one to the Qemu emulatio
 The registers to compare are exchanged before the synchronization starts. Additionally address sections can be specified with `--skip start:end` that should be skipped and not checked.
 Example:
 ```
-sb_lead --skip 0xffff7418:0xffff06dc
+sb_lead --skip 0xffff7418:0xffff06dc --skip 0xffff3f14:0xffff3f80 --skip 0xffff40f8:0xffff4128 --skip 0xffff7978:0xffff798c
 ```
 
 ### Qemu emulation

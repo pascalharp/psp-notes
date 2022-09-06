@@ -27,7 +27,14 @@ cd build
 ## Run the emulation
 Run the emulation (assuming you are inside the build directory) with:
 ```bash
-./arm-softmmu/qemu-system-arm --singlestep --machine amd-psp_zen --display none -device loader,file=$PATH_TO_ROM_BL,addr=0xffff0000,force-raw=on -bios $PATH_TO_UEFI_IMAGE -serial stdio
+$HOME/git/github.com/qemu/build/arm-softmmu/qemu-system-arm \
+    --singlestep \
+    --machine amd-psp_zen \
+    --nographic \
+    -device loader,file=$PATH_TO_ROM_BL,addr=0xffff0000,force-raw=on \
+    -global amd-psp.dbg_mode=true \
+    -global driver=amd_psp.smnflash,property=flash_img,value=$PATH_TO_UEFI_IMAGE \
+    -d unimp,guest_errors
 ```
 Replace `$PATH_TO_ROM_BL` with the path to the on-chip boot loader image and `PATH_TO_UEFI_IMAGE` with the path to the full uefi image. The trace output is emitted on stderr.
 
