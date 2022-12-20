@@ -23,13 +23,11 @@
  - Separated psp fuse to own dev device
  - Add debug option do fuse device (to match PSPEmu behavior)
  - Fix reset sctlr
+ - Fix smn misc values
+ - Add multiple machines to support Zen+ and Zen2
+ - Create different class implementations for soc and smn to support different mapping configurations
+ - Rework tracing to support qemu's `-d` flag, check `qemu-system-arm -d "trace:help" | grep -E 'psp|ccp'` for list
 
 ## Status
- - registers diverge at 0xffff7418 (busy sleep) syncs back later.
- - ~~registers diverge at 0xffff0b60 -> value loaded from smn reagion differs (addr: 0x125a078)~~
- - registers diverge at 0xffff3f14 -> Different read from timer -> syncs back later
- - registers diverge at 0xffff40f8 -> Different read from timer -> syncs back later
- - ~~registers diverge at 0xffff63f8 -> Unimplemented device in qemu -> Results in different branch after 0xffff640c~~
-   - ~~Qemu to: 0xffff6410~~
-   - ~~PSPEmu to: 0xffff6428~~
-   - ~~PC syncs back up at 0xffff6428, reg values still differ, results in pc difference after 0xffff62a8~~
+ - Zen and Zen+ on-chip bootloader working
+ - Zen2 stuck half way

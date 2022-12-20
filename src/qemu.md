@@ -1,5 +1,7 @@
 # Qemu
 
+TODO: fix correct branch once finalized
+
 The PSPEmu port for Qemu can be found [here](https://github.com/pascalharp/qemu/tree/psp_refactor)
 
 ## Building Qemu
@@ -25,6 +27,8 @@ cd build
  The final built of `qemu-system-arm` will be located inside the build directory.
 
 ## Run the emulation
+TODO: update command and add section for trace options
+
 Run the emulation (assuming you are inside the build directory) with:
 ```bash
 $HOME/git/github.com/qemu/build/arm-softmmu/qemu-system-arm \

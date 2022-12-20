@@ -16,12 +16,14 @@ The SMN consists of a separate memory region. 32 slots exist to map into the SMN
 ## SMN memory region
 | From | To | Component |
 | ---- | -- | ------ |
-| ...          | ...          | ... |
-| `0x0a000000` | `0x0affffff` | SMN SPI Flash ??? |
-| ...          | ...          | ... |
-| `0x00000000` | `0xffffffff` | misc (low priority) |
+| ...            | ...          | ... |
+| `0x0a000000`\* | `0x0affffff` | SMN SPI Flash ??? |
+| ...            | ...          | ... |
+| `0x00000000`   | `0xffffffff` | misc (low priority) |
 
 A misc memory mapping covers the whole SMN memory region with low priority.
+
+_* `0x44000000` for Zen 2_
 
 ## Mapping
 SMN slot 0 through 31 are mapped into the PSP memory map from address `0x01000000` to `0x02ffffff`.
