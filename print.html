@@ -1,0 +1,466 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>PSP Emulation Notes</title>
+        <meta name="robots" content="noindex" />
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="qemu.html"><strong aria-hidden="true">1.</strong> Qemu</a></li><li class="chapter-item expanded "><a href="sync_bridge.html"><strong aria-hidden="true">2.</strong> Sync Bridge</a></li><li class="chapter-item expanded "><a href="changelog.html"><strong aria-hidden="true">3.</strong> Changelog</a></li><li class="chapter-item expanded "><a href="memory_regions.html"><strong aria-hidden="true">4.</strong> Memory Regions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_regions/smn.html"><strong aria-hidden="true">4.1.</strong> System Management Network</a></li><li class="chapter-item expanded "><a href="memory_regions/mmio.html"><strong aria-hidden="true">4.2.</strong> Standard MMIO</a></li></ol></li><li class="chapter-item expanded "><a href="comparison.html"><strong aria-hidden="true">5.</strong> Comparison: PSPEmu vs Qemu</a></li><li class="chapter-item expanded "><a href="resources.html"><strong aria-hidden="true">6.</strong> Resources</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">PSP Emulation Notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="qemu"><a class="header" href="#qemu">Qemu</a></h1>
+<p>TODO: fix correct branch once finalized</p>
+<p>The PSPEmu port for Qemu can be found <a href="https://github.com/pascalharp/qemu/tree/psp_refactor">here</a></p>
+<h2 id="building-qemu"><a class="header" href="#building-qemu">Building Qemu</a></h2>
+<ul>
+<li>Clone the repository and check out the correct branch</li>
+</ul>
+<pre><code class="language-bash">git clone git@github.com:pascalharp/qemu.git
+cd qemu
+git checkout psp_refactor
+</code></pre>
+<ul>
+<li>Create a build directory and run the configure script</li>
+</ul>
+<pre><code class="language-bash">mkdir build
+cd build
+../configure --target-list=arm-softmmu --enable-debug --disable-tools --disable-guest-agent --disable-virtfs --enable-nettle --enable-gmp
+</code></pre>
+<ul>
+<li>Build Qemu</li>
+</ul>
+<pre><code class="language-bash">make
+</code></pre>
+<p>The final built of <code>qemu-system-arm</code> will be located inside the build directory.</p>
+<h2 id="run-the-emulation"><a class="header" href="#run-the-emulation">Run the emulation</a></h2>
+<p>TODO: update command and add section for trace options</p>
+<p>Run the emulation (assuming you are inside the build directory) with:</p>
+<pre><code class="language-bash">$HOME/git/github.com/qemu/build/arm-softmmu/qemu-system-arm \
+    --singlestep \
+    --machine amd-psp_zen \
+    --nographic \
+    -device loader,file=$PATH_TO_ROM_BL,addr=0xffff0000,force-raw=on \
+    -global amd-psp.dbg_mode=true \
+    -global driver=amd_psp.smnflash,property=flash_img,value=$PATH_TO_UEFI_IMAGE \
+    -d unimp,guest_errors
+</code></pre>
+<p>Replace <code>$PATH_TO_ROM_BL</code> with the path to the on-chip boot loader image and <code>PATH_TO_UEFI_IMAGE</code> with the path to the full uefi image. The trace output is emitted on stderr.</p>
+<p>Additionally you can use:</p>
+<ul>
+<li><code>-d unimp,guest_errors</code> to output additional information (very verbose!).</li>
+<li><code>-S -s</code> to stop the execution at the beginning and to open a gdb port.</li>
+</ul>
+<h3 id="additional-emulation-options"><a class="header" href="#additional-emulation-options">Additional emulation options</a></h3>
+<p>Set specific device properties with the <code>-global</code> option. For example: <code>-global amd-psp.dbg_mode=true</code></p>
+<p>Options:</p>
+<ul>
+<li><code>amd-psp.dbg_mode</code> bool, enable dbg mode. This corresponds to the <code>fPspDbgMode</code> flag on PSPEmu.</li>
+</ul>
+<h2 id="connect-with-gdb"><a class="header" href="#connect-with-gdb">Connect with gdb</a></h2>
+<p>Either with <code>arm-none-eabi-gdb</code> or <code>gdb-multiarch</code> you can connect to the running Qemu session with <code>target remote localhost:1234</code> if the emulation was started with the <code>-s</code> flag</p>
+<h2 id="ret-sync"><a class="header" href="#ret-sync">ret-sync</a></h2>
+<p>ret-sync can be used to synchronize a running gdb session with ghidra.</p>
+<h3 id="ghdira"><a class="header" href="#ghdira">ghdira</a></h3>
+<p>Download the latest <a href="https://github.com/bootleg/ret-sync/tree/master/ext_ghidra/dist">ret-sync extension for ghidra</a> and the matching <a href="https://github.com/NationalSecurityAgency/ghidra/releases">ghidra version</a>. As of now ghidra does not have a stable plugin api, so the version has to match exactly. Create a new ghidra project (and probably import the already existing ghidra project) and install the extension: <code>File -&gt; Install Extension -&gt; + -&gt; ...</code>. Inside the directory where the ghidra project is located create a <code>.sync</code> configuration file:</p>
+<pre><code class="language-bash">cat &lt;&lt;EOF &gt; .sync
+    [GENERAL]
+    use_raw_addr=true
+EOF
+</code></pre>
+<p>If everything was set up correctly you should see output similar to this after restarting ghidra and opening the project:</p>
+<pre><code class="language-bash">[*] retsync init
+[&gt;] loading configuration file /path/to/project/psp.rep/.sync
+  - using raw addresses: true
+</code></pre>
+<p>In the top menu you should now see new options for ret-sync. Click the <code>+</code> to Start the listener.</p>
+<h3 id="gdb"><a class="header" href="#gdb">gdb</a></h3>
+<p>A gdb version for arm compiled with python3 support is required. Download the <a href="https://github.com/bootleg/ret-sync/tree/master/ext_gdb">ret-sync plugin for gdb</a> and save it. In the same directory create a <code>.sync</code> configuration file with the corresponding mapping. For example:</p>
+<pre><code class="language-bash">cat &lt;&lt;EOF &gt; .sync
+    [INIT]
+    context = {
+        &quot;pid&quot;: 200,
+        &quot;mappings&quot;: [
+          [0x0, 0x1ffff, 0x20000, &quot;OFF_CHIP_BL&quot;],
+          [0x00e00000, 0x00efffff, 0x100000, &quot;ASRock-A520M-HSV-1.31.fd90.driver_entries.bin&quot;],
+          [0xffff0000, 0xffffffff, 0x10000, &quot;on-chip-ryzen-zen.bl&quot;]
+        ]
+      }
+EOF
+</code></pre>
+<p>Start the Qemu emulation with debug flags (see above). Then start gdb, attach to the session, source the ret-sync plugin and start the synchronization:</p>
+<pre><code>arm-none-eabi-gdb
+target remote localhost:1234
+source /path/to/plugin/sync.py
+sync
+</code></pre>
+<p>The output should look similar to this:</p>
+<pre><code>(gdb) target remote localhost:1234
+Remote debugging using localhost:1234
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the &quot;file&quot; command.
+0xffff0000 in ?? ()
+(gdb) source /path/to/plugin/sync.py
+[sync] configuration file loaded from: /path/to/plugin/.sync
+[sync] initialization context:
+{
+    &quot;pid&quot;: 200,
+    &quot;mappings&quot;: [
+        [
+            0,
+            131071,
+            131072,
+            &quot;OFF_CHIP_BL&quot;
+        ],
+        [
+            14680064,
+            15728639,
+            1048576,
+            &quot;ASRock-A520M-HSV-1.31.fd90.driver_entries.bin&quot;
+        ],
+        [
+            4294901760,
+            4294967295,
+            65536,
+            &quot;on-chip-ryzen-zen.bl&quot;
+        ]
+    ]
+}
+
+[sync] init
+[sync] 18 commands added
+(gdb) sync
+[sync] initializing tunnel to IDA using localhost:9100...
+[sync] sync is now enabled with host localhost
+(gdb)
+</code></pre>
+<p>You can now step through the code in gdb and ghidra will update or set <a href="https://github.com/bootleg/ret-sync#ida-bindings-over-debugger-commands">breakpoints and continue the emulation</a> from within ghidra.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sync-bridge"><a class="header" href="#sync-bridge">Sync Bridge</a></h1>
+<p>Sync Bridge is a small little python script to synchronize two running gdb instances. It is used to compare the behavior of PSPEmu and the Qemu port. It currently only compares the PC and stops once they differ.</p>
+<h2 id="python-script"><a class="header" href="#python-script">python script</a></h2>
+<p>The script can be found in this <a href="https://github.com/pascalharp/gdb_sync_bridge">repository</a></p>
+<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<p>First start the Qemu and the PSPEmu emulation with gdb. Different ports are required. Here PSPEmu will be on port <code>1235</code> and Qemu will be on the default port <code>1234</code>.</p>
+<p>Replace <code>PSP_ROM_BL</code> with the full path to the on-chip bootloader and <code>PSP_UEFI_IMAGE</code> with the full path to the uefi image.</p>
+<p>Now start two <code>arm-none-eabi-gdb</code> instances and connect one to the Qemu emulation and one to the PSPEmu emulation. Source the sync_bridge plugin and initialize it. Now first start one of them first as the leader with <code>sb_leader</code> and afterwords the other one as the follower <code>sb_follow</code>. Make sure they start at the same address. Check the scripts below on how to automate this process.</p>
+<p>The registers to compare are exchanged before the synchronization starts. Additionally address sections can be specified with <code>--skip start:end</code> that should be skipped and not checked.
+Example:</p>
+<pre><code>sb_lead --skip 0xffff7418:0xffff06dc --skip 0xffff3f14:0xffff3f80 --skip 0xffff40f8:0xffff4128 --skip 0xffff7978:0xffff798c
+</code></pre>
+<h3 id="qemu-emulation"><a class="header" href="#qemu-emulation">Qemu emulation</a></h3>
+<pre><code class="language-bash">#!/bin/env bash
+path/to/qemu/build/qemu-system-arm \
+	--singlestep \
+	--machine amd-psp_zen \
+	--display none \
+	-device loader,file=$PSP_ROM_BL,addr=0xffff0000,force-raw=on \
+	-global amd-psp.dbg_mode=true \
+	-bios $PSP_UEFI_IMAGE \
+	-serial stdio \
+	-d unimp,guest_errors
+	-S -s
+</code></pre>
+<h3 id="pspemu-emulation"><a class="header" href="#pspemu-emulation">PSPEmu emulation</a></h3>
+<pre><code class="language-bash">#!/bin/env bash
+path/to/PSPEmu/build/PSPEmu \
+    --emulation-mode on-chip-bl \
+    --flash-rom $PSP_UEFI_IMAGE \
+    --on-chip-bl $PSP_ROM_BL \
+    --timer-real-time \
+    --trace-log ./log \
+    --intercept-svc-6 \
+    --trace-svcs \
+    --dbg 1235
+</code></pre>
+<h3 id="gdb-qemu"><a class="header" href="#gdb-qemu">GDB qemu</a></h3>
+<pre><code class="language-bash">#!/bin/env bash
+arm-none-eabi-gdb \
+	-ex 'source path/to/ret-sync/sync.py' \  # Only if combined with ret-sync
+	-ex 'ser arch arm' \
+	-ex 'source path/to/sync_bridge.py' \    # Set path to sync bridge script
+	-ex 'sb_init' \
+	-ex 'target remote localhost:1234' \
+	-ex 'break *0xffff005c' \                # Set this to the starting point
+	-ex 'sync' \                             # Only if combined with ret-sync
+	-ex 'continue'
+</code></pre>
+<p>Then initiate the synchronization with <code>sb_lead</code></p>
+<h3 id="gdb-pspemu"><a class="header" href="#gdb-pspemu">GDB PSPEmu</a></h3>
+<pre><code class="language-bash">#!/bin/env bash
+arm-none-eabi-gdb \
+	-ex 'ser arch arm' \
+	-ex 'source path/to/sync_bridge.py' \    # Set path to sync bridge script
+	-ex 'sb_init' \
+	-ex 'target remote localhost:1235' \
+	-ex 'break *0xffff005c' \                # Set this to the starting point
+	-ex 'continue'
+</code></pre>
+<p>Let the synchronization begin with <code>sb_follow</code></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="changelog"><a class="header" href="#changelog">Changelog</a></h1>
+<h2 id="qemu-4-to-qemu-7"><a class="header" href="#qemu-4-to-qemu-7">Qemu 4 to Qemu 7</a></h2>
+<ul>
+<li>Based on the initial version by Robert Buhren (<a href="./resources.html">See here</a>)</li>
+<li>convert Makefile set up to the new ninja based build system</li>
+<li>integrate with meson</li>
+<li>add <code>--enable-gmp</code> flag to the Qemu configure set up</li>
+<li>Fix function definitions that changed</li>
+<li>Create workarounds for deprecated global variables (mostly bios)</li>
+<li>merged upstream to upgrade to Qemu 7 and fixed deprecated stuff</li>
+</ul>
+<h2 id="sync-bridge-1"><a class="header" href="#sync-bridge-1">Sync Bridge</a></h2>
+<ul>
+<li>Created Sync Bridge Plugin</li>
+<li>Sync Bridge Plugin now compares most basic registers instead of only pc</li>
+<li>Moved Sync Bridge to its own repository</li>
+<li>Use python calls to load register values instead of gdb cli calls</li>
+<li>Automatically exchange compatible registers for synchronization</li>
+<li>Add option to skip address ranges to be checked</li>
+</ul>
+<h2 id="improvements"><a class="header" href="#improvements">Improvements</a></h2>
+<ul>
+<li>Added more read only register values to the smn control =&gt; Reached another sts output</li>
+<li>Separated trace output from <code>LOG_UNIMP</code> to <code>LOG_TRACE</code></li>
+<li>Separated psp fuse to own dev device</li>
+<li>Add debug option do fuse device (to match PSPEmu behavior)</li>
+<li>Fix reset sctlr</li>
+<li>Fix smn misc values</li>
+<li>Add multiple machines to support Zen+ and Zen2</li>
+<li>Create different class implementations for soc and smn to support different mapping configurations</li>
+<li>Rework tracing to support qemu's <code>-d</code> flag, check <code>qemu-system-arm -d &quot;trace:help&quot; | grep -E 'psp|ccp'</code> for list</li>
+</ul>
+<h2 id="status"><a class="header" href="#status">Status</a></h2>
+<ul>
+<li>Zen and Zen+ on-chip bootloader working</li>
+<li>Zen2 stuck half way</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="memory-regions"><a class="header" href="#memory-regions">memory regions</a></h1>
+<table><thead><tr><th>From</th><th>To</th><th>Periph</th></tr></thead><tbody>
+<tr><td><code>0x00000000</code></td><td><code>0x00040000</code></td><td>SRAM</td></tr>
+<tr><td><code>0x01000000</code></td><td><code>0x02ffffff</code></td><td><a href="./memory_regions/smn.html">System Management Network Mapped</a></td></tr>
+<tr><td><code>0x03000000</code></td><td><code>0x03ffffff</code></td><td><a href="./memory_regions/mmio.html">Standard MMIO</a></td></tr>
+<tr><td><code>0x04000000</code></td><td><code>0xfbffffff</code></td><td>x86 address space mapping slots</td></tr>
+<tr><td><code>0xffff0000</code></td><td><code>0xffffffff</code></td><td>ROM (on-chip boot loader)</td></tr>
+</tbody></table>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="system-management-network"><a class="header" href="#system-management-network">System Management Network</a></h1>
+<p>The SMN consists of a separate memory region. 32 slots exist to map into the SMN memory region from the PSP memory region.</p>
+<h2 id="psp-memory-region"><a class="header" href="#psp-memory-region">PSP memory region</a></h2>
+<table><thead><tr><th>From</th><th>To</th><th>Component</th></tr></thead><tbody>
+<tr><td><code>0x01000000</code></td><td><code>0x010fffff</code></td><td>SMN slot 0</td></tr>
+<tr><td><code>0x01100000</code></td><td><code>0x011fffff</code></td><td>SMN slot 1</td></tr>
+<tr><td>...</td><td>...</td><td>...</td></tr>
+<tr><td><code>0x02f00000</code></td><td><code>0x02ffffff</code></td><td>SMN slot 31</td></tr>
+<tr><td>...</td><td>...</td><td>Not related to SMN</td></tr>
+<tr><td><code>0x03220000</code></td><td><code>0x0322001f</code></td><td>SMN control</td></tr>
+</tbody></table>
+<h2 id="smn-memory-region"><a class="header" href="#smn-memory-region">SMN memory region</a></h2>
+<table><thead><tr><th>From</th><th>To</th><th>Component</th></tr></thead><tbody>
+<tr><td>...</td><td>...</td><td>...</td></tr>
+<tr><td><code>0x0a000000</code>*</td><td><code>0x0affffff</code></td><td>SMN SPI Flash ???</td></tr>
+<tr><td>...</td><td>...</td><td>...</td></tr>
+<tr><td><code>0x00000000</code></td><td><code>0xffffffff</code></td><td>misc (low priority)</td></tr>
+</tbody></table>
+<p>A misc memory mapping covers the whole SMN memory region with low priority.</p>
+<p><em>* <code>0x44000000</code> for Zen 2</em></p>
+<h2 id="mapping"><a class="header" href="#mapping">Mapping</a></h2>
+<p>SMN slot 0 through 31 are mapped into the PSP memory map from address <code>0x01000000</code> to <code>0x02ffffff</code>.
+Every slot can map into a 1MB section of the SMN memory.
+The 16 control registers (32 bit each) are located in the PSP memory region at address <code>0x03220000</code>.
+Each control register corresponds to 2 slot's with the lower and upper 16 bit respectively.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="mmio"><a class="header" href="#mmio">MMIO</a></h1>
+<table><thead><tr><th>Start</th><th>What</th></tr></thead><tbody>
+<tr><td><code>0x03000000</code></td><td>CCPV v5</td></tr>
+<tr><td><code>0x03010104</code></td><td>Fuse</td></tr>
+<tr><td><code>0x03010400</code></td><td>Timer 1</td></tr>
+<tr><td><code>0x03010424</code></td><td>Timer 2</td></tr>
+<tr><td><code>0x032000e8</code> *</td><td>STS</td></tr>
+<tr><td><code>0x03220000</code></td><td>SMN control</td></tr>
+<tr><td><code>0x03230000</code></td><td>x86 control</td></tr>
+</tbody></table>
+<p><em>* <code>0x032000d8</code> for Zen 2</em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="comparison-pspemu-vs-qemu"><a class="header" href="#comparison-pspemu-vs-qemu">Comparison PSPEmu vs Qemu</a></h1>
+<h2 id="general-mmio"><a class="header" href="#general-mmio">General MMIO</a></h2>
+<table><thead><tr><th>What</th><th>PSPEmu</th><th>Where</th><th>Qemu</th><th>Where</th></tr></thead><tbody>
+<tr><td>psp timer</td><td>✅</td><td><code>psp-dev-timer.c</code></td><td>✅</td><td><code>hw/arm/psp-timer.c</code></td></tr>
+<tr><td>psp sts</td><td>✅</td><td><code>psp-dev-status.c</code></td><td>✅</td><td><code>hw/arm/psp-sts.c</code></td></tr>
+<tr><td>psp irq</td><td>✅</td><td><code>psp-irq.c</code></td><td>❌</td><td></td></tr>
+<tr><td>smn control</td><td>✅</td><td>?</td><td>✅</td><td><code>hw/arm/psp-smn.c</code></td></tr>
+<tr><td>x86 control</td><td>✅</td><td>?</td><td>❌ *</td><td><code>hw/arm/psp-x86.c</code></td></tr>
+<tr><td>CCP</td><td>✅</td><td><code>psp-dev-ccp-v5.c</code></td><td>✅</td><td><code>hw/misc/ccpv5.c</code></td></tr>
+<tr><td>smn flash</td><td>✅</td><td><code>psp-dev-flash.c</code></td><td>✅</td><td><code>hw/arm/psp-smn-flash.c</code></td></tr>
+<tr><td>psp fuse</td><td>✅</td><td><code>psp-dev-fuse.c</code></td><td>✅</td><td><code>hw/arm/psp-fuse.c</code></td></tr>
+<tr><td>psp gpio</td><td>✅</td><td><code>psp-dev-gpio.c</code></td><td>❌ ?</td><td></td></tr>
+<tr><td>x86 uart</td><td>✅</td><td><code>psp-dev-x86-uart.c</code></td><td>❌ ?</td><td></td></tr>
+<tr><td>x86 iomux</td><td>✅</td><td><code>psp-dev-iomux.c</code></td><td>❌ ?</td><td></td></tr>
+<tr><td>x86 lpc</td><td>✅</td><td><code>psp-dev-lpc.c</code></td><td>❌ ?</td><td></td></tr>
+</tbody></table>
+<p><em>* only on Qemu v4 at the moment</em></p>
+<h2 id="smn"><a class="header" href="#smn">SMN</a></h2>
+<p>TODO</p>
+<h2 id="x86"><a class="header" href="#x86">x86</a></h2>
+<p>TODO</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="resources"><a class="header" href="#resources">Resources</a></h1>
+<ul>
+<li><a href="https://github.com/PSPReverse/psp-docs/blob/master/masterthesis-eichner-psp-2020.pdf">Implementing an emulator for AMD's Platform Security Processor (Alexander Eichner)</a></li>
+<li><a href="https://github.com/PSPReverse/PSPEmu">PSPEmu (unicorn based)</a></li>
+<li><a href="https://github.com/RobertBuhren/qemu/tree/pspemu">Qemu (initial version by Robert Buhren)</a></li>
+<li><a href="https://github.com/pascalharp/qemu/tree/psp_refactor">Qemu (port)</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+    </body>
+</html>
